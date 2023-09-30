@@ -2,6 +2,6 @@ package cmd
 
 import "fmt"
 
-func Execute() {
+func Init() {
 	fmt.Println("ㅇㅇ")
 }
