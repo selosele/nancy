@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 
 	"github.com/cloudinary/cloudinary-go/v2"
@@ -21,6 +22,8 @@ func main() {
 		log.Fatalf("Failed to initialize Cloudinary, %v\n", err)
 	}
 
+	ctx := context.Background()
+
 	// 라우트 설정
-	handlers.Init(cld)
+	handlers.Init(cld, ctx)
 }
