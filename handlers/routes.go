@@ -1,30 +1,35 @@
 package handlers
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/cloudinary/cloudinary-go/v2"
+	"github.com/gorilla/mux"
 	"github.com/selosele/nancy/handlers/details"
+	"github.com/selosele/nancy/handlers/list"
 	"github.com/selosele/nancy/handlers/upload"
 )
 
 /* 라우트 설정 */
-func Init(cld *cloudinary.Cloudinary) {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+func Init(cld *cloudinary.Cloudinary, ctx context.Context) {
+	r := mux.NewRouter()
 
-		// 이미지 조회 Handler
-		if r.RequestURI == "/details" && r.Method == http.MethodGet {
-			details.Handle(cld)
-			return
-		}
+	// 파일 조회 Handler
+	r.HandleFunc("/files/{public_id}", func(w http.ResponseWriter, r *http.Request) {
+		details.Handle(w, cld, ctx)
+	}).Methods(http.MethodGet)
 
-		// 이미지 업로드 Handler
-		if r.RequestURI == "/upload" && r.Method == http.MethodPost {
-			upload.Handle(cld)
-			return
-		}
+	// 파일 목록 조회 Handler
+	r.HandleFunc("/files", func(w http.ResponseWriter, r *http.Request) {
+		list.Handle(w, cld, ctx)
+	}).Methods(http.MethodGet)
 
-		// 요청이 지원되지 않는 경우 405 Method Not Allowed 응답을 보냄
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-	})
+	// 파일 업로드 Handler
+	r.HandleFunc("/files", func(w http.ResponseWriter, r *http.Request) {
+		upload.Handle(w, cld, ctx)
+	}).Methods(http.MethodPost)
+
+	http.Handle("/", r)
+	http.ListenAndServe(":5000", nil)
 }
