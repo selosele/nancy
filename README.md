@@ -1,6 +1,6 @@
 # nancy
 
-Cloudinary 이미지 업로드 API
+Cloudinary 파일 업로드 API
 
 ## 기술스택
 
