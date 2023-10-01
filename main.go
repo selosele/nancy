@@ -25,5 +25,5 @@ func main() {
 	ctx := context.Background()
 
 	// 라우트 설정
-	handlers.Init(cld, ctx)
+	handlers.Setup(cld, ctx)
 }

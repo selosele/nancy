@@ -12,7 +12,7 @@ import (
 )
 
 /* 라우트 설정 */
-func Init(cld *cloudinary.Cloudinary, ctx context.Context) {
+func Setup(cld *cloudinary.Cloudinary, ctx context.Context) {
 	r := mux.NewRouter()
 
 	// 파일 조회 Handler
