@@ -1,18 +1,17 @@
 package list
 
 import (
-	"context"
 	"encoding/json"
 	"log"
 	"net/http"
 
-	"github.com/cloudinary/cloudinary-go/v2"
 	"github.com/cloudinary/cloudinary-go/v2/api/admin"
+	"github.com/selosele/nancy/models"
 )
 
 /* 파일 목록 조회 Handler */
-func Handle(w http.ResponseWriter, cld *cloudinary.Cloudinary, ctx context.Context) error {
-	resp, err := cld.Admin.Asset(ctx, admin.AssetParams{PublicID: ""}) // public_id가 없으면 전체 파일 목록을 조회
+func Handle(h models.Handler, w http.ResponseWriter) error {
+	resp, err := h.Cld.Admin.Asset(h.Ctx, admin.AssetParams{PublicID: ""}) // public_id가 없으면 전체 파일 목록을 조회
 
 	if err != nil {
 		log.Fatalf("Failed to get list of files, %v\n", err)

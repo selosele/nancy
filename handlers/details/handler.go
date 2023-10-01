@@ -1,17 +1,16 @@
 package details
 
 import (
-	"context"
 	"log"
 	"net/http"
 
-	"github.com/cloudinary/cloudinary-go/v2"
 	"github.com/cloudinary/cloudinary-go/v2/api/admin"
+	"github.com/selosele/nancy/models"
 )
 
 /* 파일 조회 Handler */
-func Handle(w http.ResponseWriter, cld *cloudinary.Cloudinary, ctx context.Context) error {
-	resp, err := cld.Admin.Asset(ctx, admin.AssetParams{PublicID: "y2ofmteyrfkvg8jldraz.jpg"})
+func Handle(h models.Handler, w http.ResponseWriter) error {
+	resp, err := h.Cld.Admin.Asset(h.Ctx, admin.AssetParams{PublicID: "y2ofmteyrfkvg8jldraz.jpg"})
 
 	if err != nil {
 		log.Fatalf("Failed to get details of files, %v\n", err)

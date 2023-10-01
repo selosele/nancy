@@ -7,6 +7,7 @@ import (
 	"github.com/cloudinary/cloudinary-go/v2"
 	"github.com/joho/godotenv"
 	"github.com/selosele/nancy/handlers"
+	"github.com/selosele/nancy/models"
 )
 
 func main() {
@@ -24,6 +25,12 @@ func main() {
 
 	ctx := context.Background()
 
+	// Handler 구조체 생성
+	h := models.Handler{
+		Cld: cld,
+		Ctx: ctx,
+	}
+
 	// 라우트 설정
-	handlers.Setup(cld, ctx)
+	handlers.Setup(h)
 }

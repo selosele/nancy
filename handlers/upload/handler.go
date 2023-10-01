@@ -1,18 +1,17 @@
 package upload
 
 import (
-	"context"
 	"log"
 	"net/http"
 
-	"github.com/cloudinary/cloudinary-go/v2"
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
+	"github.com/selosele/nancy/models"
 )
 
 /* 파일 업로드 Handler */
-func Handle(w http.ResponseWriter, cld *cloudinary.Cloudinary, ctx context.Context) error {
-	uploadResult, err := cld.Upload.Upload(
-		ctx,
+func Handle(h models.Handler, w http.ResponseWriter) error {
+	uploadResult, err := h.Cld.Upload.Upload(
+		h.Ctx,
 		"https://cloudinary-res.cloudinary.com/image/upload/cloudinary_logo.png",
 		uploader.UploadParams{PublicID: "logo"},
 	)
