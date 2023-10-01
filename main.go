@@ -6,8 +6,8 @@ import (
 
 	"github.com/cloudinary/cloudinary-go/v2"
 	"github.com/joho/godotenv"
-	"github.com/selosele/nancy/handlers"
 	"github.com/selosele/nancy/models"
+	"github.com/selosele/nancy/routes"
 )
 
 func main() {
@@ -25,12 +25,9 @@ func main() {
 
 	ctx := context.Background()
 
-	// Handler 구조체 생성
-	h := models.Handler{
+	// 라우트 설정
+	routes.Setup(models.HandlerParams{
 		Cld: cld,
 		Ctx: ctx,
-	}
-
-	// 라우트 설정
-	handlers.Setup(h)
+	})
 }

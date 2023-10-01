@@ -9,22 +9,25 @@ import (
 	"github.com/selosele/nancy/models"
 )
 
-/* 파일 목록 조회 Handler */
-func Handle(h models.Handler, w http.ResponseWriter) error {
-	resp, err := h.Cld.Admin.Asset(h.Ctx, admin.AssetParams{PublicID: ""}) // public_id가 없으면 전체 파일 목록을 조회
+/* 파일 목록 조회 Handler 구조체 */
+type Handler struct {
+	Params models.HandlerParams
+}
+
+/* 파일 목록 조회 HTTP 요청 처리 */
+func (h Handler) HandleRequest(w http.ResponseWriter, r *http.Request) {
+
+	// 파일 목록을 조회한다(PublicID가 없으면 전체 파일 목록을 조회).
+	resp, err := h.Params.Cld.Admin.Asset(
+		h.Params.Ctx,
+		admin.AssetParams{PublicID: ""},
+	)
 
 	if err != nil {
 		log.Fatalf("Failed to get list of files, %v\n", err)
-		return err
 	}
 
-	// 응답 결과를 JSON 형식의 바이트 슬라이스로 변환
-	json, err := json.Marshal(resp)
-	if err != nil {
-		log.Fatalf("Failed to marshal JSON, %v\n", err)
-		return err
-	}
-
-	w.Write(json)
-	return nil
+	// JSON을 응답으로 보낸다.
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(resp.Response)
 }
