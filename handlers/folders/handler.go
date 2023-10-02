@@ -26,7 +26,7 @@ func (h Handler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 	)
 
 	if err != nil {
-		log.Fatalf("Failed to get files, %v\n", err)
+		log.Fatalf("Failed to get folders: %v\n", err)
 	}
 
 	// JSON을 응답으로 보낸다.
