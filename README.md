@@ -1,6 +1,6 @@
 # nancy
 
-Cloudinary 파일 업로드 API
+Cloudinary 파일 API
 
 ## 작업기간
 - 2023.09.30. ~
