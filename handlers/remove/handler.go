@@ -28,17 +28,27 @@ func (h Handler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 	)
 
 	if err != nil {
-		log.Fatalf("Failed to remove file, %v\n", err)
+		log.Fatalf("Failed to remove file: %v\n", err)
 	}
 
-	// 삭제하고자 하는 파일이 없는 경우
-	if result.Result == "not found" {
-		log.Printf("Failed to remove file, %v\n", result.Result)
+	var resp any
+
+	// 오류 발생 시, 오류 메시지를 출력한다.
+	if utils.IsNotBlank(result.Error.Message) {
+		log.Printf("Failed to remove file: %v\n", result.Error.Message)
+		resp = result.Error
 	} else {
-		log.Printf("Successfully removed file: %v\n", result.Response)
+
+		if result.Result != "ok" { // 파일 삭제 실패 시
+			log.Printf("Failed to remove file: %v\n", result.Result)
+			resp = result.Response
+		} else { // 파일 삭제 성공 시
+			resp = result.Response
+			log.Printf("Successfully removed file: %v\n", result.Result)
+		}
 	}
 
 	// JSON을 응답으로 보낸다.
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(result.Response)
+	json.NewEncoder(w).Encode(resp)
 }
