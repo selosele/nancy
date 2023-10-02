@@ -26,7 +26,7 @@ func (h Handler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 	defer file.Close()
 
 	// Cloudinary에 파일을 업로드한다.
-	resp, err := h.Params.Cld.Upload.Upload(
+	result, err := h.Params.Cld.Upload.Upload(
 		h.Params.Ctx,
 		file,
 		uploader.UploadParams{
@@ -38,18 +38,20 @@ func (h Handler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 		log.Fatalf("Failed to upload file, %v\n", err)
 	}
 
+	// TODO - 리팩토링 필요
 	// 폴더명은 받아왔는데 파일명이 누락되었을 경우
 	// 예) publicId: myfolder/
-	if resp.SecureURL == "" {
-		msg := "Failed to upload file: " + resp.SecureURL
+	// result.SecureURL이 비어 있으면 무조건 해당?
+	if result.SecureURL == "" {
+		msg := "Failed to upload file: not found"
 		log.Println(msg)
 		http.Error(w, msg, http.StatusBadRequest)
 		return
 	}
 
-	log.Printf("Successfully uploaded file: %v", resp.SecureURL)
+	log.Printf("Successfully uploaded file: %v", result.SecureURL)
 
 	// JSON을 응답으로 보낸다.
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(resp.Response)
+	json.NewEncoder(w).Encode(result.Response)
 }
