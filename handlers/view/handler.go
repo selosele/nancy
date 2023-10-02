@@ -18,11 +18,11 @@ type Handler struct {
 /* 파일 조회 HTTP 요청 처리 */
 func (h Handler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 
-	// 파일을 조회한다(PublicID가 없으면 전체 파일 목록을 조회).
+	// 파일을 조회한다.
 	result, err := h.Params.Cld.Admin.Asset(
 		h.Params.Ctx,
 		admin.AssetParams{
-			PublicID:  r.FormValue("publicId"),
+			PublicID:  r.FormValue("publicId"), // publicId 파라미터가 없으면 전체 파일 목록을 조회
 			AssetType: api.AssetType(r.FormValue("assetType")),
 		},
 	)
