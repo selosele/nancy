@@ -7,6 +7,7 @@ import (
 
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/selosele/nancy/models"
+	"github.com/selosele/nancy/utils"
 )
 
 /* 파일 업로드 Handler 구조체 */
@@ -38,11 +39,8 @@ func (h Handler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 		log.Fatalf("Failed to upload file, %v\n", err)
 	}
 
-	// TODO - 리팩토링 필요
-	// 폴더명은 받아왔는데 파일명이 누락되었을 경우
-	// 예) publicId: myfolder/
-	// result.SecureURL이 비어 있으면 무조건 해당?
-	if result.SecureURL == "" {
+	// 파일을 찾을 수 없는 경우, 오류 메시지를 출력한다.
+	if utils.IsBlank(result.SecureURL) {
 		msg := "Failed to upload file: not found"
 		log.Println(msg)
 		http.Error(w, msg, http.StatusBadRequest)
