@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/selosele/nancy/handlers/folders"
 	"github.com/selosele/nancy/handlers/remove"
 	"github.com/selosele/nancy/handlers/upload"
 	"github.com/selosele/nancy/handlers/view"
@@ -26,6 +27,10 @@ func Setup(p models.HandlerParams) {
 	// 파일 삭제 Handler
 	removeHandler := remove.Handler{Params: p}
 	apiRouter.HandleFunc("/files", removeHandler.HandleRequest).Methods(http.MethodDelete)
+
+	// 폴더 목록 조회 Handler
+	foldersHandler := folders.Handler{Params: p}
+	apiRouter.HandleFunc("/folders", foldersHandler.HandleRequest).Methods(http.MethodGet)
 
 	http.Handle("/", router)
 	http.ListenAndServe(":5000", nil)
