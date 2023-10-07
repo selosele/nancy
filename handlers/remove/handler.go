@@ -35,16 +35,16 @@ func (h Handler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 
 	// 오류 발생 시, 오류 메시지를 출력한다.
 	if utils.IsNotBlank(result.Error.Message) {
-		log.Printf("Failed to remove file: %v\n", result.Error.Message)
 		resp = result.Error
+		log.Printf("Failed to remove file: %v\n", result.Error.Message)
 	} else {
 
-		if result.Result != "ok" { // 파일 삭제 실패 시
-			log.Printf("Failed to remove file: %v\n", result.Result)
-			resp = result.Response
-		} else { // 파일 삭제 성공 시
+		if result.Result == "ok" { // 파일 삭제 성공 시
 			resp = result.Response
 			log.Printf("Successfully removed file: %v\n", result.Result)
+		} else { // 파일 삭제 실패 시
+			resp = result.Response
+			log.Printf("Failed to remove file: %v\n", result.Result)
 		}
 	}
 

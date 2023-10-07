@@ -39,7 +39,7 @@ func (h Handler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 		log.Fatalf("Failed to upload file, %v\n", err)
 	}
 
-	// 파일을 찾을 수 없는 경우, 오류 메시지를 출력한다.
+	// 파일을 찾을 수 없으면 오류 메시지를 출력한다.
 	if utils.IsBlank(result.SecureURL) {
 		msg := "Failed to upload file: not found"
 		log.Println(msg)
