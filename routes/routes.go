@@ -8,7 +8,6 @@ import (
 	"github.com/selosele/nancy/handlers/remove"
 	"github.com/selosele/nancy/handlers/search"
 	"github.com/selosele/nancy/handlers/upload"
-	"github.com/selosele/nancy/middlewares"
 	"github.com/selosele/nancy/models"
 )
 
@@ -16,7 +15,6 @@ import (
 func Setup(p models.HandlerParams) {
 	router := mux.NewRouter()
 	apiRouter := router.PathPrefix("/api/").Subrouter()
-	apiRouter.Use(middlewares.AuthMiddleware)
 
 	// 파일 검색 Handler
 	searchHandler := search.Handler{Params: p}
