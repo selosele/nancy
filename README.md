@@ -1,6 +1,6 @@
 # nancy
 
-Cloudinary 파일 API
+Cloudinary 파일 API를 간편하게 활용하는 애플리케이션
 
 ## 작업기간
 - 2023.09.30. ~ 2023.10.07.
