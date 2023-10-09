@@ -7,8 +7,8 @@ Cloudinary 파일 API를 간편하게 활용하는 애플리케이션
 
 ## 기술스택 및 개발환경
 
-- Go - 1.21.1
-- WSL2 - Ubuntu 22.04 LTS
+- `Go` - 1.21.1
+- `WSL2` - Ubuntu 22.04 LTS
 
 ## etc.
 
