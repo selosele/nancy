@@ -7,13 +7,13 @@ Cloudinary 파일 API를 간편하게 활용하는 애플리케이션
 
 ## 개발 환경
 
-- `Go` - v1.21.1
-- `WSL2` - Ubuntu 22.04 LTS
+- ```Go``` - v1.21.1
+- ```WSL2``` - Ubuntu 22.04 LTS
 
 ## etc.
 
 - 파일 URL 형식: `https://res.cloudinary.com/<cloud_name>/<resource_type>/<delivery_type>[/<transformations>]/<version>/<public_id>`
-  - `resource_type` 예) image, video
-  - `delivery_type` 예) upload
-  - `version`       예) v1684887827
-  - `public_id`     예) y2ofmteyrfkvg8jldraz.jpg
+  - ```resource_type``` 예) image, video
+  - ```delivery_type``` 예) upload
+  - ```version```       예) v1684887827
+  - ```public_id```     예) y2ofmteyrfkvg8jldraz.jpg
